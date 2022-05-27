@@ -20,6 +20,9 @@ dryRun=false,										/*Cucumber dry run is used for compilation of the Step De
 glue="cucumbermap"									//Login.java or glue file folder  name
 
 )
-public class RunTest {
 
+
+public class RunTest
+{
+//nothing in this body
 }
