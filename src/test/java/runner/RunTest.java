@@ -24,5 +24,5 @@ glue="cucumbermap"									//Login.java or glue file folder  name
 
 public class RunTest
 {
-//no code in this body
+//no code in this body.
 }
