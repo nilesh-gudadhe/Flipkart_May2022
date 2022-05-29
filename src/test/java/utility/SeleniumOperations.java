@@ -1,5 +1,6 @@
 package utility;
 
+import java.util.Hashtable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -11,13 +12,16 @@ import org.openqa.selenium.interactions.Actions;
 public class SeleniumOperations {
 	
 	public static WebDriver driver=null;// parent for chrome and other browsers
+	public static Hashtable<String,Object> outputParameters=new Hashtable<String,Object>();
+	
 	
 	//reusable methods
 	
 	//1. To open Browser
-	public static void browserLaunch(Object[]InputParameters)
+	public static Hashtable<String,Object> browserLaunch(Object[]InputParameters)
 	{	
-		String bname= (String) InputParameters[0];
+		try
+		{String bname= (String) InputParameters[0];
 		String exe= (String)InputParameters[1];
 			
 		if(bname.equalsIgnoreCase("chrome"))
@@ -33,32 +37,96 @@ public class SeleniumOperations {
 			driver=new FirefoxDriver();
 			driver.manage().window().maximize();
 		}
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "method used: browserLaunch,Input Given:"+InputParameters[0].toString());
+		}
+		catch (Exception e)
+		
+		{
+			outputParameters.put("STATUS","FAIL");
+			outputParameters.put("MESSAGE", "method used: browserLaunch,Input Given:"+InputParameters[0].toString());
+		}
+		
+		return outputParameters;
 	}
-	public static void openApplication(Object[]InputParameters)
+	public static Hashtable<String,Object> openApplication(Object[]InputParameters)
 	{
+		try
+		{
 		String url=(String)InputParameters[0];
 		driver.get(url);
+		
+		outputParameters.put("STATUS","PASS");
+		outputParameters.put("MESSAGE", "method used:openApplication,Input Given:"+InputParameters[0].toString());
+		}
+		catch (Exception e)
+		{
+		outputParameters.put("STATUS","FAIL");
+		outputParameters.put("MESSAGE", "method used: openApplication,Input Given:"+InputParameters[0].toString());
+		}
+	return outputParameters;
 	}
 
-	public static void clickOnElement(Object[]InputParameters)
-	{driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	public static Hashtable<String,Object> clickOnElement(Object[]InputParameters)
+	{	try
+		{
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		String Xpath=(String)InputParameters[0];
 		driver.findElement(By.xpath(Xpath)).click();
+		
+		outputParameters.put("STATUS","PASS");
+		outputParameters.put("MESSAGE", "method used:clickOnElement,Input Given:"+InputParameters[0].toString());
+		}
+	catch (Exception e)
+	{
+		outputParameters.put("STATUS", "FAIL");
+		outputParameters.put("MESSAGE", "method used:clickOnElement,Input Given:"+InputParameters[0].toString());
+		
 	}
-	public static void sendKeys(Object[]InputParameters)
-	{driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	return outputParameters;
+	
+	}
+	public static Hashtable<String,Object> sendKeys(Object[]InputParameters)
+	{try
+	{
+	driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		String xpath= (String)InputParameters[0];
 		String uname=(String)InputParameters[1];
 		driver.findElement(By.xpath(xpath)).sendKeys(uname);
+		
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "method used:sendKeys,Input Given:"+InputParameters[1].toString());
 	}
-	public static void navigateTo(Object[]InputParameters)
-	{driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	catch (Exception e)
+	{
+		outputParameters.put("STATUS", "FAIL");
+		outputParameters.put("MESSAGE", "method used:sendKeys,Input Given:"+InputParameters[1].toString());
+	}
+	return outputParameters;
+	}
+	
+	public static Hashtable<String,Object> navigateTo(Object[]InputParameters)
+	{	try
+		{
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		String xpath=(String) InputParameters[0];
 		Actions act=new Actions(driver);
 		act.moveToElement(driver.findElement(By.xpath(xpath))).build().perform();
+		
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "method used:navigateTo,Input Given:"+InputParameters[0].toString());
+		}
+	  catch (Exception e)
+		{
+		  outputParameters.put("STATUS", "FAIL");
+			outputParameters.put("MESSAGE", "method used:navigateTo,Input Given:"+InputParameters[0].toString());
+		}
+	return outputParameters;
 	}
-	public static void loginValidation(Object[]InputParameters) throws InterruptedException
-	{	Thread.sleep(3000);
+	public static Hashtable<String,Object> loginValidation(Object[]InputParameters) throws InterruptedException
+	{	try
+	{
+		Thread.sleep(3000);
 		String xpath= (String)InputParameters[0];
 		String text=(String)InputParameters[1];
 		
@@ -73,10 +141,20 @@ public class SeleniumOperations {
 		{
 			System.out.println("Test case is Failed");
 		}
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "method used:loginValidation,Input Given:"+InputParameters[0].toString());	
+	}
+	catch (Exception e)
+	{
+		outputParameters.put("STATUS", "FAIL");
+		outputParameters.put("MESSAGE", "method used:loginValidation,Input Given:"+InputParameters[0].toString());
+	}
+	return outputParameters;
 		}
 		
-		public static void invalidlogin(Object[]InputParameters) throws InterruptedException
-		{	
+		public static Hashtable<String,Object> invalidlogin(Object[]InputParameters) throws InterruptedException
+		{	try
+		{
 			Thread.sleep(3000);
 			String xpath= (String)InputParameters[0];
 			String text=(String)InputParameters[1];
@@ -92,13 +170,32 @@ public class SeleniumOperations {
 			{
 				System.out.println("Test case is failed");
 			}
+			outputParameters.put("STATUS", "PASS");
+			outputParameters.put("MESSAGE", "method used:invalidLogin,Input Given:"+InputParameters[0].toString());	
+		}
+		catch (Exception e)
+		{
+			outputParameters.put("STATUS", "FAIL");
+			outputParameters.put("MESSAGE", "method used:invalidLogin,Input Given:"+InputParameters[0].toString());	
+		}
+		return outputParameters;
 		
 	}
-	public static void bClose()
+	public static Hashtable<String,Object> bClose()
 	{
+		try
+		{
 	driver.close();
+	outputParameters.put("STATUS", "PASS");
+	outputParameters.put("MESSAGE", "method used:bClose,Input Given:null");
 	}
-	
+	catch (Exception e)
+	{
+		outputParameters.put("STATUS", "PASS");
+		outputParameters.put("MESSAGE", "method used:bClose,Input Given:null");
+	}
+		return outputParameters;
+	}
 }
 
 
